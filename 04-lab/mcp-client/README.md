@@ -133,6 +133,8 @@ Fix the connection and restart ADK web.
 Create `.env` file:
 ```bash
 GOOGLE_API_KEY=your_gemini_api_key
+# Optional: override the MCP endpoint (defaults to local server)
+MCP_SERVER_URL=http://localhost:8085/mcp
 ```
 
 ## Resources
