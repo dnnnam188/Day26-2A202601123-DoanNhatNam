@@ -243,7 +243,7 @@ reads this metadata before listing and calling tools.
 Register the stdio server with Claude Code:
 
 ```bash
-claude mcp add weather -- python "C:\\path\\to\\Day26-2A202601379-NguyenDoKhaiHoan\\02-mcp-basics\\weather_server.py"
+claude mcp add weather -- python "C:\path\to\Day26-2A202601123-DoanNhatNam\02-mcp-basics\weather_server.py"
 claude mcp list
 ```
 

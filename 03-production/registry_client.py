@@ -90,6 +90,7 @@ async def connect_and_call(match: dict, tool_args: dict) -> str:
         params = StdioServerParameters(
             command=sys.executable,
             args=server["args"],
+            cwd=str(REGISTRY_PATH.parent),
         )
         async with stdio_client(params) as (read, write):
             async with ClientSession(read, write) as session:
@@ -108,7 +109,7 @@ async def connect_and_call(match: dict, tool_args: dict) -> str:
 
         async with httpx.AsyncClient(headers=headers) as http_client:
             async with streamable_http_client(server["url"], http_client=http_client) as (
-                read, write, _,
+                read, write, *_,
             ):
                 async with ClientSession(read, write) as session:
                     await session.initialize()
