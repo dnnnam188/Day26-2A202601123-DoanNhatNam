@@ -230,3 +230,37 @@ Chi tiết + code cho cả 3 phần: xem [`03-production/README.md`](03-producti
 ---
 
 **Tóm lại:** Function Calling là *cơ chế model gọi công cụ*; MCP là *chuẩn để kết nối model với các công cụ đó* — và MCP thực chất dùng Function Calling làm nền tảng để hoạt động.
+# Day26 submission notes
+
+## Requirements coverage
+
+The `03-production` implementation solves reusable weather lookup for AI clients. It
+contains `get_weather(city)` v1 (string output) and `get_weather_v2(city,
+include_forecast=false, units="celsius")` v2 (JSON output), while preserving v1 for
+old clients. `versioned_server.py` publishes `server://info`; `versioned_client.py`
+reads this metadata before listing and calling tools.
+
+Register the stdio server with Claude Code:
+
+```bash
+claude mcp add weather -- python "C:\\path\\to\\Day26-2A202601379-NguyenDoKhaiHoan\\02-mcp-basics\\weather_server.py"
+claude mcp list
+```
+
+Authenticated Streamable HTTP demo (no credential is committed):
+
+```powershell
+$env:MCP_AUTH_TOKEN = "<choose-a-local-token>"
+python 03-production/auth_server.py
+# In a second shell set the same value, then:
+$env:MCP_AUTH_TOKEN = "<choose-a-local-token>"
+python 03-production/auth_client.py
+```
+
+Use `wrong-value` to test an invalid token (HTTP 401/403), or remove
+`MCP_AUTH_TOKEN` to test the missing-token response (HTTP 401). The server fails closed.
+
+Verification: `pip install -r requirements.txt`, then run
+`python 03-production/versioned_client.py` and `python 02-mcp-basics/weather_client.py`.
+Keep API keys, access tokens, passwords, private keys, secrets, and real `.env` files
+outside the repository.

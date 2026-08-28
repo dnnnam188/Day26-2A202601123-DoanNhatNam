@@ -12,6 +12,7 @@ Cách chạy (cần auth_server.py đang chạy ở terminal khác):
 from __future__ import annotations
 
 import asyncio
+import os
 
 import httpx
 
@@ -19,7 +20,9 @@ from mcp import ClientSession
 from mcp.client.streamable_http import streamable_http_client
 
 SERVER_URL = "http://localhost:8000/mcp"
-TOKEN = "dev-token-abc123"
+TOKEN = os.environ.get("MCP_AUTH_TOKEN")
+if not TOKEN:
+    raise RuntimeError("Set MCP_AUTH_TOKEN in your shell before running this client")
 
 
 async def main() -> None:
